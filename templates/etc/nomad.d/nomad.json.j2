@@ -1,0 +1,3 @@
+{% set nomad_bootstrap_expect = groups[nomad_servers_group]|count|round(0, 'ceil')|int %}
+{% set _ = nomad_configuration['server'].update({'bootstrap_expect': nomad_bootstrap_expect}) %}
+{{ nomad_configuration|to_nice_json }}

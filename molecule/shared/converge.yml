@@ -1,6 +1,8 @@
 ---
 - name: Converge
   hosts: all
+  vars:
+    nomad_bind_interface: "{{ ansible_default_ipv4['interface'] | replace('-', '_') }}"
   tasks:
     - name: Include ansible-nomad
       include_role:

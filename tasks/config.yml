@@ -1,0 +1,14 @@
+---
+- name: config | Removing Default HCL Config
+  file:
+    path: "{{ nomad_config_dir }}/nomad.hcl"
+    state: absent
+  become: true
+
+- name: config | Configuring Nomad
+  template:
+    src: etc/nomad.d/nomad.json.j2
+    dest: "{{ nomad_config_dir }}/nomad.json"
+  become: true
+  notify:
+    - restart nomad

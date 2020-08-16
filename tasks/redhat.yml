@@ -1,0 +1,28 @@
+---
+- name: redhat | Adding HashiCorp Repo
+  yum_repository:
+    name: hashicorp
+    description: Hashicorp Stable - $basearch
+    baseurl: https://rpm.releases.hashicorp.com/RHEL/$releasever/$basearch/stable
+    enabled: true
+    gpgcheck: true
+    gpgkey: https://rpm.releases.hashicorp.com/gpg
+  become: true
+  when: ansible_distribution != "Fedora"
+
+- name: redhat | Adding HashiCorp Repo
+  yum_repository:
+    name: hashicorp
+    description: Hashicorp Stable - $basearch
+    baseurl: https://rpm.releases.hashicorp.com/fedora/$releasever/$basearch/stable
+    enabled: true
+    gpgcheck: true
+    gpgkey: https://rpm.releases.hashicorp.com/gpg
+  become: true
+  when: ansible_distribution == "Fedora"
+
+- name: redhat | Installing Nomad
+  package:
+    name: nomad-{{ nomad_version }}
+    state: present
+  become: true
